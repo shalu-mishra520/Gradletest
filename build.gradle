@@ -1,0 +1,36 @@
+plugins {
+	id 'org.springframework.boot' version '2.3.4.RELEASE'
+	id 'io.spring.dependency-management' version '1.0.10.RELEASE'
+	id 'com.commercehub.gradle.plugin.avro' version '0.6.0.RELEASE'
+	id 'java'
+}
+
+group = 'com.GradleAvro'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '1.8'
+
+repositories {
+	mavenCentral()
+}
+sourceSets.main.java.srcDirs = ['build/generated-main-avro-java', 'src/main/java','build/generated/sources/annotationProcessor/java/main']
+avro{
+  createSetters = false
+  fieldVisibility = "PRIVATE"
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'org.springframework.kafka:spring-kafka'
+	testImplementation('org.springframework.boot:spring-boot-starter-test') {
+		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+	}
+	testImplementation 'org.springframework.kafka:spring-kafka-test'
+}
+
+dependencies {
+    compile "org.apache.avro:avro:1.8.2"
+}
+test {
+	useJUnitPlatform()
+}
